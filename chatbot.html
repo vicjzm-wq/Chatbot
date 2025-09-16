@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Mini ChatBot</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .chatbox {
+      width: 350px;
+      height: 500px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .messages {
+      flex: 1;
+      padding: 10px;
+      overflow-y: auto;
+    }
+    .msg {
+      margin: 5px 0;
+      padding: 8px 12px;
+      border-radius: 12px;
+      max-width: 80%;
+    }
+    .user {
+      background: #007bff;
+      color: white;
+      margin-left: auto;
+    }
+    .bot {
+      background: #e4e6eb;
+      margin-right: auto;
+    }
+    .input-area {
+      display: flex;
+      border-top: 1px solid #ddd;
+    }
+    input {
+      flex: 1;
+      border: none;
+      padding: 10px;
+      outline: none;
+    }
+    button {
+      background: #007bff;
+      border: none;
+      color: white;
+      padding: 10px 15px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="chatbox">
+    <div class="messages" id="messages"></div>
+    <div class="input-area">
+      <input type="text" id="userInput" placeholder="Escribe algo...">
+      <button onclick="sendMessage()">Enviar</button>
+    </div>
+  </div>
+
+  <script>
+    function sendMessage() {
+      const input = document.getElementById("userInput");
+      const msgText = input.value.trim();
+      if (msgText === "") return;
+
+      // Mensaje del usuario
+      addMessage(msgText, "user");
+
+      // Respuesta del bot (simple)
+      let response = "No entendí tu mensaje 🤖";
+      if (msgText.toLowerCase().includes("hola")) {
+        response = "¡Hola! ¿Cómo estás?";
+      } else if (msgText.toLowerCase().includes("adiós")) {
+        response = "¡Hasta luego!";
+      } else if (msgText.toLowerCase().includes("pizza")) {
+        response = "Tenemos pizza Margherita, Pepperoni y Hawaiana 🍕";
+      }
+
+      setTimeout(() => {
+        addMessage(response, "bot");
+      }, 500);
+
+      input.value = "";
+    }
+
+    function addMessage(text, sender) {
+      const messages = document.getElementById("messages");
+      const msg = document.createElement("div");
+      msg.classList.add("msg", sender);
+      msg.textContent = text;
+      messages.appendChild(msg);
+      messages.scrollTop = messages.scrollHeight;
+    }
+  </script>
+</body>
+</html>
